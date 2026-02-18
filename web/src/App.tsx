@@ -20,14 +20,14 @@ debugData([
         id: 'test',
         type: 'player',
         slots: 50,
-        label: 'Bob Smith',
+        label: 'Akyn Dias',
         weight: 3000,
         maxWeight: 5000,
         items: [
           {
             slot: 1,
-            name: 'iron',
-            weight: 3000,
+            name: 'weed',
+            weight: 500,
             metadata: {
               description: `name: Svetozar Miletic  \n Gender: Male`,
               ammo: 3,
@@ -61,9 +61,9 @@ debugData([
       },
       rightInventory: {
         id: 'shop',
-        type: 'crafting',
+        type: 'drop',
         slots: 5000,
-        label: 'Bob Smith',
+        label: 'Sol',
         weight: 3000,
         maxWeight: 5000,
         items: [

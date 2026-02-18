@@ -1,64 +1,84 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// AURA DESIGN SYSTEM — Absolute Fidelity Override for ox_inventory
-// All values sourced directly from aura_ui.html reference.
+// AURA DESIGN SYSTEM — Full structural overhaul for ox_inventory
+// Reference: aura_ui.html — absolute fidelity target
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ─── Aura Color Tokens ────────────────────────────────────────────────────────
-$zinc-950:  #09090b;
-$zinc-900:  #18181b;
-$zinc-800:  #27272a;
-$zinc-700:  #3f3f46;
-$zinc-600:  #52525b;
-$zinc-500:  #71717a;
-$zinc-400:  #a1a1aa;
-$zinc-300:  #d4d4d8;
-$zinc-200:  #e4e4e7;
-$white:     #ffffff;
+// ─── Color tokens ─────────────────────────────────────────────────────────────
+$zinc-950: #09090b;
+$zinc-900: #18181b;
+$zinc-800: #27272a;
+$zinc-700: #3f3f46;
+$zinc-600: #52525b;
+$zinc-500: #71717a;
+$zinc-400: #a1a1aa;
+$zinc-300: #d4d4d8;
+$zinc-200: #e4e4e7;
+$zinc-100: #f4f4f5;
 
-$emerald:   #10b981;
-$rose:      #f43f5e;
-$cyan:      #06b6d4;
-$amber:     #f59e0b;
-$blue:      #3b82f6;
+$emerald-500: #10b981;
+$emerald-400: #34d399;
+$emerald-300: #6ee7b7;
+$rose-500:    #f43f5e;
+$rose-300:    #fda4af;
+$rose-900:    #881337;
+$cyan-500:    #06b6d4;
+$cyan-300:    #67e8f9;
+$amber-500:   #f59e0b;
+$amber-300:   #fcd34d;
+$amber-100:   #fef3c7;
+$blue-500:    #3b82f6;
+$indigo-300:  #a5b4fc;
+$orange-300:  #fdba74;
+$yellow-500:  #eab308;
 
-// ─── Aura Panel Glass — exact values from reference ───────────────────────────
-// .glass-panel { background: rgba(10,10,10,0.75); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
-$glass-bg:      rgba(10, 10, 10, 0.75);
-$glass-border:  rgba(255, 255, 255, 0.08);
-$glass-shadow:  0 25px 50px -12px rgba(0, 0, 0, 0.5);
+// ─── Aura glass — exact values from reference ─────────────────────────────────
+$glass-bg:     rgba(10, 10, 10, 0.4);  // Changed from 0.75 to 0.4 for more transparency
+$glass-border: rgba(255, 255, 255, 0.08);
+$glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
-// ─── Aura Slot Tokens — exact values from reference ───────────────────────────
-// .slot-bg { background: linear-gradient(180deg,rgba(255,255,255,0.03)…); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
-// .slot-active:hover { background: linear-gradient(…rgba(255,255,255,0.07)…); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1),… }
-$slot-bg-gradient:       linear-gradient(180deg, rgba(255, 255, 255, 0.030) 0%, rgba(255, 255, 255, 0.010) 100%);
-$slot-active-gradient:   linear-gradient(180deg, rgba(255, 255, 255, 0.070) 0%, rgba(255, 255, 255, 0.040) 100%);
-$slot-border-inset:      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-$slot-hover-border:      inset 0 0 0 1px rgba(255, 255, 255, 0.10);
-$slot-hover-shadow:      0 4px 12px rgba(0, 0, 0, 0.20);
-
-// ─── Typography ───────────────────────────────────────────────────────────────
-$font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-$tracking-tight:  -0.025em;
-$tracking-wide:    0.06em;
-
-// ─── Grid Layout ──────────────────────────────────────────────────────────────
-$gridCols:  5;
-$gridRows:  5;
-$gridSize:  10.2vh;   // slot width = slot height (square)
-$gridGap:   8px;      // reference uses gap-3 (12px); 8px is balanced for vh slots
-
-// ─── Glass Panel Mixin — exact from reference ─────────────────────────────────
+// ─── Glass mixin ──────────────────────────────────────────────────────────────
 @mixin glass {
   background: $glass-bg;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid $glass-border;
   box-shadow: $glass-shadow;
-  border-radius: 16px;
+  border-radius: 1rem;
 }
 
-// ─── Universal Font & Box Model ───────────────────────────────────────────────
-// Force Inter everywhere — no element should inherit Roboto or system fonts.
+
+// ─── Slot tokens — exact from .slot-bg / .slot-active in reference ────────────
+$slot-bg-gradient:     linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+$slot-active-gradient: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.04) 100%);
+$slot-ring:            inset 0 0 0 1px rgba(255,255,255,0.05);
+$slot-hover-ring:      inset 0 0 0 1px rgba(255,255,255,0.1);
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$tracking-tight: -0.025em;
+$tracking-wide:   0.06em;
+$tracking-widest: 0.1em;
+
+// ─── Grid ─────────────────────────────────────────────────────────────────────
+$gridCols: 5;
+$gridRows: 5;
+$gridSize: 10.2vh;
+$gridGap:  12px;
+
+// ─── Glass mixin ──────────────────────────────────────────────────────────────
+@mixin glass {
+  background: $glass-bg;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid $glass-border;
+  box-shadow: $glass-shadow;
+  border-radius: 1rem;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// RESET / BASE
+// ═══════════════════════════════════════════════════════════════════════════════
+
 *, *::before, *::after {
   box-sizing: border-box;
   font-family: $font;
@@ -66,13 +86,11 @@ $gridGap:   8px;      // reference uses gap-3 (12px); 8px is balanced for vh slo
   -moz-osx-font-smoothing: grayscale;
 }
 
-// ─── Selection ────────────────────────────────────────────────────────────────
 ::selection {
   background-color: $zinc-700;
-  color: $white;
+  color: #fff;
 }
 
-// ─── Base ─────────────────────────────────────────────────────────────────────
 body {
   margin: 0;
   height: 100vh;
@@ -82,40 +100,806 @@ body {
   color: $zinc-300;
 }
 
-#root {
-  height: 100%;
-}
+#root { height: 100%; }
 
-// ─── Scrollbar — thin, invisible-when-idle ────────────────────────────────────
-::-webkit-scrollbar       { width: 3px; }
-::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 2px;
-  &:hover { background: rgba(255, 255, 255, 0.15); }
-}
+p { margin: 0; padding: 0; }
 
-// ─── Reset paragraphs ─────────────────────────────────────────────────────────
-p {
-  margin: 0;
-  padding: 0;
-}
-
-// Hide number input arrows
+// Hide number-input spinners
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   appearance: none;
+  margin: 0;
 }
 
-// ─── App root ─────────────────────────────────────────────────────────────────
-.app-wrapper {
+// Thin scrollbar
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  &:hover { background: rgba(255,255,255,0.2); }
+}
+
+.app-wrapper { height: 100%; width: 100%; color: $zinc-300; }
+
+button:active { transform: translateY(2px); }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// UTILITY CLASSES — Tailwind-inspired
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.glass-panel {
+  @include glass;
+}
+
+.slot-bg {
+  background: $slot-bg-gradient;
+  box-shadow: $slot-ring;
+}
+
+.slot-active {
+  &:hover {
+    background: $slot-active-gradient;
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: $slot-hover-ring, 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY PANEL — Classe unifiée pour tous les panneaux d'inventaire
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-panel {
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  padding: 0px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  min-height: 0;
+}
+
+// Classe utilitaire pour hauteur dynamique
+.h-fit {
+  height: max-content !important;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MAIN LAYOUT — 3-column grid (col-3 | col-5 | col-4 of 12-col system)
+// Reference: "grid grid-cols-12 gap-6"
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-wrapper {
+  display: grid;
+  grid-template-columns: 25fr 42fr 33fr;   // 3 : 5 : 4 proportions
+  gap: 24px;                               // reference: gap-6
+  width: 95vw;
+  max-width: 95%;
+  height: 90vh;
+  padding: 8px;
+  // Tooltip and context menu are absolute, not grid children
+  position: relative;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLAYER CARD — left column, reference "Profile Card" + "Vitals" sections
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.player-card {
+  @include glass;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+  height: fit-content;
+  position: relative;
+  overflow: hidden;
+}
+
+// Top accent line — "from-zinc-500 to-zinc-800" gradient stripe
+.player-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, $zinc-500 0%, $zinc-800 100%);
+  border-radius: 1rem 1rem 0 0;
+}
+
+// ── Profile header ────────────────────────────────────────────────────────────
+.player-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;   // clear the accent bar
+}
+
+.player-card-avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $zinc-800;
+  border: 1px solid $zinc-700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $zinc-400;
+  font-size: 24px;
+}
+
+.player-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;   // allow text truncation
+}
+
+.player-card-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: $zinc-500;
+  font-weight: 500;
+}
+
+.player-card-role {
+  background-color: rgba($zinc-800, 0.8);
+  color: $zinc-400;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.player-card-id {
+  color: $zinc-500;
+  font-size: 12px;
+}
+
+// ── Vitals 2×2 grid ───────────────────────────────────────────────────────────
+// Reference: "grid grid-cols-2 gap-3"
+.vitals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+// Individual vital card — "bg-zinc-900/40 rounded-xl p-3 border border-white/5"
+.vital-card {
+  background-color: rgba($zinc-900, 0.40);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vital-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vital-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $zinc-500;
+  letter-spacing: 0;
+}
+
+.vital-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Vital progress bar — "bg-zinc-800/50 rounded-full h-1.5 overflow-hidden"
+.vital-track {
+  width: 100%;
+  background: rgba($zinc-800, 0.50);
+  border-radius: 9999px;
+  height: 6px;     // h-1.5 = 6px
+  overflow: hidden;
+}
+
+.vital-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+
+  &.health { background-color: $rose-500; }
+  &.armor { background-color: $blue-500; }
+  &.hunger { background-color: $amber-500; }
+  &.thirst { background-color: $cyan-500; }
+}
+
+// ── Carrying load ─────────────────────────────────────────────────────────────
+// Reference: mt-auto section at the bottom of Profile Card
+.weight-section {
+  margin-top: auto;   // push to bottom of card
+}
+
+.weight-section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: $zinc-400;
+  margin-bottom: 8px;
+}
+
+// "bg-zinc-800/50 rounded-full h-2 overflow-hidden border border-white/5"
+.weight-section-track {
+  width: 100%;
+  background: rgba($zinc-800, 0.50);
+  border-radius: 9999px;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.weight-section-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background-color: $zinc-400;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY GRID PANELS — center (pockets) and right (ground/chest)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-grid-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px 12px 12px;
+  min-height: 0;
+  position: relative;
+  // Les styles visuels sont maintenant gérés par .inventory-panel
+}
+
+.inventory-grid-header {
+  padding: 12px 12px 12px 12px;
+}
+
+// Panel header row — icon+label (left) + weight pill+filter (right)
+.inventory-grid-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+// Left: icon + inventory label
+.grid-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+  padding: 10px;
+}
+
+.grid-header-icon {
+  color: $zinc-400;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+// Right: weight pill + filter input
+.grid-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Weight pill
+.grid-weight-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  .font-semibold {
+    font-weight: 600;
+    color: $zinc-400;
+  }
+}
+
+// Filter input — right side of header
+// "bg-zinc-900/60 border border-white/6 rounded-md text-xs text-zinc-300"
+.grid-header-filter {
+  width: 160px;
+  padding: 6px 12px;
+  padding-left: 36px;
+  border-radius: 8px;
+  background-color: rgba($zinc-900, 0.50);
+  border: 1px solid rgba(255,255,255,0.05);
+  color: $zinc-300;
+  font-size: 12px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.15s, width 0.2s, box-shadow 0.15s;
+
+  &::placeholder { color: $zinc-600; }
+
+  &:focus {
+    border-color: $zinc-700;
+    box-shadow: 0 0 0 1px $zinc-700;
+  }
+}
+
+// Scrollable slot grid — flex:1 fills remaining panel height
+.inventory-grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: max-content;
+  gap: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  width: 100%;
+  flex: 1;
+  align-content: start;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY SLOTS — exact .slot-bg and .slot-active from reference
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// CRITICAL: The ::before pseudo-element carries the gradient.
+// The component injects `backgroundImage` as an inline style which would
+// override any CSS background-image — ::before is immune to this.
+//
+.inventory-slot {
+  position: relative;
+  overflow: hidden;           // clips ::before + absolute children to rounded corners
+  border-radius: 12px;        // rounded-xl
+  border: 1px solid transparent;
+  box-shadow: $slot-ring;
+  aspect-ratio: 1;
   width: 100%;
   color: $zinc-300;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  // slot-bg gradient — lives on ::before so inline backgroundImage can't kill it
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: $slot-bg-gradient;
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.15s ease;
+  }
+
+  // slot-active hover
+  &:hover {
+    border-color: rgba(255,255,255,0.20);
+    box-shadow: $slot-hover-ring, 0 4px 12px rgba(0,0,0,0.20);
+
+    &::before { background: $slot-active-gradient; }
+
+    .inventory-slot-number {
+      color: $zinc-400;
+    }
+  }
 }
 
-// ─── Drag preview ─────────────────────────────────────────────────────────────
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // On garde 2 colonnes
+  gap: 8px; // On réduit un peu l'espacement
+  height: max-content;
+}
+
+.equipment-slot {
+  @extend .inventory-slot;
+  aspect-ratio: auto;      // Écrase le format carré de .inventory-slot
+  height: 48px;            // Hauteur fixe et compacte
+  display: flex;
+  flex-direction: row;     // Icône et texte côte à côte
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 12px;
+  gap: 12px;
+
+  .equipment-icon {
+    font-size: 20px;       // Icône légèrement plus petite
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .equipment-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: $tracking-wide;
+    margin-top: 0;         // Annule la marge du carré
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ── Slot number — top-left badge, z-index above the item-slot-wrapper overlay ──
+// "absolute top-2 left-2 text-[10px] font-semibold text-zinc-500"
+.inventory-slot-number {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;   // above item-slot-wrapper (z-index 2) which creates a stacking context
+  font-size: 10px;
+  font-weight: 600;
+  color: $zinc-500;
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.15s ease;
+}
+
+// ── Item image — centered frame (replaces backgroundImage inline style) ────────
+// "flex items-center justify-center" — item image at 55% of slot size
+.slot-image-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 16px;
+}
+
+.slot-image {
+  width: 100%;
+  height: 100%;
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+// ── Inner slot wrapper — full-size overlay for tooltip hover events ────────────
+.item-slot-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;   // creates a stacking context; slot-number uses z-index 10 to stay above
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p { font-size: 10px; }
+}
+
+// ── Count / weight badge — bottom-right absolute glass pill ───────────────────
+// Reference: "bg-zinc-900/80 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-medium text-zinc-400 border border-white/5"
+.item-slot-info-wrapper {
+  position: absolute;
+  z-index: 3;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  background-color: rgba($zinc-900, 0.80);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+
+  p {
+    font-size: 10px;
+    font-weight: 500;
+    color: $zinc-400;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+}
+
+// ── Item label — gradient overlay pinned to slot bottom ───────────────────────
+.inventory-slot-label-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.70) 0%, transparent 100%);
+  padding: 16px 6px 6px;
+}
+
+.inventory-slot-label-text {
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: $tracking-wide;
+  color: rgba(255,255,255,0.45);
+  padding: 0 4px;
+}
+
+// ── Durability bar — absolute, pinned to very bottom of slot ─────────────────
+// Reference: "absolute bottom-0 left-0 w-full h-1 bg-zinc-800"
+.durability-bar {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  background: rgba($zinc-800, 0.40);
+
+  .durability-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+
+    &.high { background-color: $emerald-500; box-shadow: 0 0 10px rgba(16,185,129,0.4); }
+    &.medium { background-color: $yellow-500; }
+    &.low { background-color: $rose-500; }
+  }
+}
+
+// ── Shop price / currency ─────────────────────────────────────────────────────
+.item-slot-currency-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2px 4px;
+  p { font-size: 11px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+}
+
+.item-slot-price-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2px 4px;
+  p { font-size: 11px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+}
+
+// ─── (Legacy) header wrappers — kept so hotbar doesn't break ──────────────────
+.item-slot-header-wrapper     { display: flex; flex-direction: row; justify-content: flex-end; }
+.item-hotslot-header-wrapper  { @extend .item-slot-header-wrapper; justify-content: space-between; }
+.hotbar-slot-header-wrapper   { display: flex; flex-direction: row; justify-content: space-between; }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WEIGHT BAR — Vitals pill style (used in right panel header via WeightBar)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.weight-bar {
+  background: rgba($zinc-800, 0.50);
+  height: 6px;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: none;
+  margin-top: 6px;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ACTION BAR — bottom of player pockets panel
+// Reference: "mt-4 pt-4 border-t border-white/5 flex items-center justify-between"
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-shrink: 0;
+  gap: 8px;
+}
+
+// Left: "HOTBAR 1 – 5" hint badge
+// Reference: "px-3 py-2 bg-zinc-900/50 rounded-lg border border-white/5 text-xs text-zinc-400"
+.action-bar-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: rgba($zinc-900, 0.50);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $zinc-400;
+  white-space: nowrap;
+}
+
+.action-bar-hint-label {
+  color: $zinc-600;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+}
+
+// Right: controls group
+.action-bar-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// Quantity input
+// Reference: "bg-zinc-900 border border-zinc-700 rounded-lg w-16 py-2 px-3 text-center text-xs text-white"
+.action-qty {
+  width: 64px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: $zinc-900;
+  border: 1px solid $zinc-700;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus {
+    border-color: $zinc-500;
+    box-shadow: 0 0 0 1px $zinc-500;
+  }
+}
+
+// Base action button
+// Reference: "px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium border border-white/5"
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background-color: $zinc-800;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: $zinc-300;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.1s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+
+  &:hover {
+    background-color: $zinc-700;
+    border-color: rgba(255,255,255,0.1);
+  }
+}
+
+// Drop button — rose accent
+// Reference: "bg-rose-900/30 hover:bg-rose-900/50 text-rose-300 border border-rose-500/20"
+.action-btn-danger {
+  background-color: rgba($rose-900, 0.30);
+  border-color: rgba($rose-500, 0.20);
+  color: $rose-300;
+
+  &:hover {
+    background-color: rgba($rose-900, 0.50);
+    border-color: rgba($rose-500, 0.30);
+  }
+}
+
+// Close button — subtle zinc
+.action-btn-close {
+  background-color: transparent;
+  border-color: rgba(255,255,255,0.06);
+  color: $zinc-500;
+
+  &:hover {
+    background-color: rgba(255,255,255,0.05);
+    color: $zinc-300;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// HOTBAR
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.hotbar-container {
+  display: flex;
+  align-items: center;
+  gap: $gridGap;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  bottom: 2vh;
+  z-index: 10;
+}
+
+.hotbar-item-slot {
+  @extend .inventory-slot;
+  width: $gridSize;
+  height: $gridSize;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ITEM NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.item-notification-container {
+  display: flex;
+  overflow-x: hidden;
+  flex-wrap: nowrap;
+  gap: 4px;
+  position: absolute;
+  bottom: 20vh;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 10;
+}
+
+.item-notification-action-box {
+  width: 100%;
+  color: $zinc-400;
+  background-color: rgba($zinc-800, 0.70);
+  text-transform: uppercase;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  p { font-size: 9px; padding: 3px 4px; font-weight: 600; letter-spacing: 0.07em; }
+}
+
+.item-notification-item-box {
+  @extend .inventory-slot;
+  height: $gridSize;
+  width: $gridSize;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DRAG PREVIEW
+// ═══════════════════════════════════════════════════════════════════════════════
+
 .item-drag-preview {
   width: 7.7vh;
   height: 7.7vh;
@@ -131,489 +915,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// LAYOUT
-// ═══════════════════════════════════════════════════════════════════════════════
-
-// Outer wrapper — three-column (left panel | controls | right panel)
-.inventory-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  gap: 24px;          // reference: gap-6
-  padding: 0 16px;
-}
-
-// ─── Center control strip ─────────────────────────────────────────────────────
-.inventory-control {
-  display: flex;
-
-  .inventory-control-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .inventory-control-input {
-    width: 72px;
-    padding: 12px 8px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0;
-    text-align: center;
-    outline: none;
-    color: $white;
-    background-color: rgba($zinc-800, 0.6);
-    border: 1px solid $glass-border;
-    transition: border-color 150ms, background-color 150ms;
-    &:focus {
-      border-color: rgba(255, 255, 255, 0.2);
-      background-color: rgba($zinc-900, 0.85);
-    }
-  }
-
-  .inventory-control-button {
-    width: 72px;
-    padding: 10px 8px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: $tracking-wide;
-    text-transform: uppercase;
-    color: $zinc-300;
-    background-color: rgba($zinc-800, 0.6);
-    border: 1px solid $glass-border;
-    transition: background-color 150ms, border-color 150ms;
-    cursor: pointer;
-    &:hover {
-      background-color: rgba($zinc-700, 0.7);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-  }
-}
-
-// ─── Useful-controls dialog ───────────────────────────────────────────────────
-.useful-controls-dialog {
-  @include glass;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: $zinc-300;
-  width: 460px;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  gap: 16px;
-}
-
-.useful-controls-dialog-overlay {
-  background-color: rgba(0, 0, 0, 0.55);
-}
-
-.useful-controls-dialog-title {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: $tracking-tight;
-  color: $white;
-}
-
-.useful-controls-dialog-close {
-  width: 28px;
-  height: 28px;
-  padding: 6px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  fill: $zinc-400;
-  cursor: pointer;
-  &:hover { background-color: rgba(255, 255, 255, 0.07); }
-}
-
-.useful-controls-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.07);
-}
-
-.useful-controls-button {
-  position: absolute !important;
-  bottom: 24px;
-  right: 24px;
-  transition: 150ms !important;
-  border: 1px solid $glass-border !important;
-  color: $zinc-400;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  fill: $zinc-400;
-  border-radius: 12px !important;
-  background-color: rgba($zinc-800, 0.7) !important;
-  cursor: pointer;
-  &:hover {
-    background-color: rgba($zinc-700, 0.8) !important;
-    border-color: rgba(255, 255, 255, 0.15) !important;
-  }
-}
-
-.useful-controls-exit-button {
-  position: absolute !important;
-  right: 8px;
-  top: 8px;
-  border-radius: 8px !important;
-  color: $zinc-500 !important;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// INVENTORY GRID PANELS — glass-panel from reference
-// ═══════════════════════════════════════════════════════════════════════════════
-
-.inventory-grid-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;            // spacious gap between header, weight bar, and grid
-  @include glass;       // exact rgba(10,10,10,0.75) + blur(24px) + border
-  padding: 24px;        // reference: p-6
-}
-
-// Panel header: label (left) + weight (right)
-.inventory-grid-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    font-size: 15px;
-    font-weight: 500;
-    letter-spacing: $tracking-tight;  // tracking-tight from reference
-    color: $white;
-
-    // The weight text (second p) is smaller and muted
-    &:last-child {
-      font-size: 12px;
-      font-weight: 400;
-      color: $zinc-400;
-      letter-spacing: 0;
-      background-color: rgba($zinc-900, 0.5);
-      border: 1px solid $glass-border;
-      border-radius: 6px;
-      padding: 2px 8px;
-    }
-  }
-}
-
-// Scrollable slot grid
-.inventory-grid-container {
-  display: grid;
-  grid-template-columns: repeat($gridCols, $gridSize);
-  grid-auto-rows: $gridSize;    // perfectly square slots
-  gap: $gridGap;                // 8px — spacious modern layout
-  max-height: 54vh;             // ~5 rows visible, rest scrolls
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-right: 2px;           // tiny inset for scrollbar
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// INVENTORY SLOTS — exact .slot-bg and .slot-active from reference
-// ═══════════════════════════════════════════════════════════════════════════════
-//
-// CRITICAL: The component sets `backgroundImage` as an inline style.
-// Inline styles beat CSS class `background-image`. We use a ::before
-// pseudo-element for the gradient so it ALWAYS renders regardless of the
-// inline backgroundImage on the host element.
-//
-.inventory-slot {
-  // Geometry
-  position: relative;
-  overflow: hidden;             // clips ::before gradient to rounded corners
-  border-radius: 12px;          // rounded-xl from reference
-  border: 1px solid transparent;
-
-  // Item image properties (set via inline style by InventorySlot.tsx)
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 7vh;
-  image-rendering: -webkit-optimize-contrast;
-
-  // Inner border ring — slot-bg style
-  box-shadow: $slot-border-inset;
-
-  // Color / transition
-  color: $zinc-300;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  cursor: pointer;
-
-  // ── slot-bg gradient via ::before (immune to inline backgroundImage) ──────
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: $slot-bg-gradient;
-    pointer-events: none;
-    z-index: 0;
-    transition: background 0.15s ease;
-  }
-
-  // ── slot-active hover ─────────────────────────────────────────────────────
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.20);
-    box-shadow: $slot-hover-border, $slot-hover-shadow;
-
-    &::before {
-      background: $slot-active-gradient;
-    }
-  }
-}
-
-// ─── Slot inner wrapper ───────────────────────────────────────────────────────
-.item-slot-wrapper {
-  position: relative;     // containing block for absolutely positioned children
-  z-index: 1;             // above the ::before gradient layer
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-
-  p { font-size: 10px; }
-}
-
-// ─── Header row (slot number + count badge) ───────────────────────────────────
-.item-slot-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding: 4px;
-}
-
-.item-hotslot-header-wrapper {
-  @extend .item-slot-header-wrapper;
-  justify-content: space-between;
-}
-
-// ─── Hotbar slot number — top-left pill ───────────────────────────────────────
-// Reference: "text-[10px] font-semibold text-zinc-500"
-.inventory-slot-number {
-  font-size: 10px;
-  font-weight: 600;
-  font-family: $font;
-  color: $zinc-500;
-  line-height: 1;
-  background-color: transparent;
-  padding: 2px 1px;
-  border-radius: 0;
-  height: auto;
-}
-
-// ─── Count / weight badge — positioned bottom-right of slot ──────────────────
-// Reference: "bg-zinc-900/80 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-medium text-zinc-400 border border-white/5"
-.item-slot-info-wrapper {
-  position: absolute;
-  z-index: 3;
-  bottom: 5px;
-  right: 4px;
-
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-  align-items: center;
-
-  background-color: rgba($zinc-950, 0.80);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
-  padding: 1px 5px;
-
-  p {
-    font-size: 10px;
-    font-weight: 500;
-    color: $zinc-400;
-    line-height: 1.4;
-    white-space: nowrap;
-  }
-}
-
-// ─── Bottom section of slot wrapper ──────────────────────────────────────────
-// Contains durability bar + price + label.
-// We let flex push this to the bottom (spacer above is the header, content
-// grows to fill the middle via the image). The price and label are styled here.
-
-// ─── Item label — gradient overlay at bottom ──────────────────────────────────
-// Instead of a hard dark strip, the label fades in as a gradient so the item
-// image breathes. Position absolute so it doesn't compress the icon area.
-.inventory-slot-label-box {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  // Gradient: transparent at top, dark at bottom (like a vignette)
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, transparent 100%);
-  padding: 12px 4px 4px;
-}
-
-.inventory-slot-label-text {
-  display: block;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 9px;
-  font-weight: 500;
-  font-family: $font;
-  letter-spacing: 0.07em;
-  color: rgba(255, 255, 255, 0.45);
-  padding: 0 3px;
-}
-
-// ─── Durability bar — pinned to the very bottom of the slot ──────────────────
-// Reference: "absolute bottom-0 left-0 w-full h-1 bg-zinc-800" inner fill coloured
-.durability-bar {
-  position: absolute;
-  z-index: 4;         // above label overlay
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  border-radius: 0 0 12px 12px;  // matches parent corner radius
-  overflow: hidden;
-  background: rgba($zinc-800, 0.40);
-}
-
-// ─── Price / currency wrappers ────────────────────────────────────────────────
-.item-slot-currency-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 2px 4px;
-  p {
-    font-size: 11px;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  }
-}
-
-.item-slot-price-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding: 2px 4px;
-  p {
-    font-size: 11px;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// PROGRESS BARS — Aura "Vitals" style
-// reference: "bg-zinc-800/50 rounded-full h-1.5 overflow-hidden"
-// WeightBar injects fill color via inline `backgroundColor` — we only style the track.
-// ═══════════════════════════════════════════════════════════════════════════════
-
-// Weight bar (inventory carry capacity — shown in grid panel header)
-.weight-bar {
-  background: rgba($zinc-800, 0.50);
-  height: 6px;          // h-1.5 = 6px
-  border-radius: 9999px;
-  overflow: hidden;
-  border: none;
-}
-
-// (durability-bar moved above, in slot section)
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// HOTBAR
-// ═══════════════════════════════════════════════════════════════════════════════
-
-.hotbar-container {
-  display: flex;
-  align-items: center;
-  gap: $gridGap;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  bottom: 2vh;
-}
-
-.hotbar-item-slot {
-  @extend .inventory-slot;
-  width: $gridSize;
-  height: $gridSize;
-  // Slightly more visible inner border for hotbar context
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-}
-
-.hotbar-slot-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// ITEM NOTIFICATIONS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-.item-notification-container {
-  display: flex;
-  overflow-x: hidden;
-  flex-wrap: nowrap;
-  gap: 4px;
-  position: absolute;
-  bottom: 20vh;
-  left: 50%;
-  width: auto;
-  transform: translate(-50%);
-}
-
-.item-notification-action-box {
-  width: 100%;
-  color: $zinc-400;
-  background-color: rgba($zinc-800, 0.70);
-  text-transform: uppercase;
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border-bottom: none;
-  p {
-    font-size: 9px;
-    padding: 3px 4px;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-  }
-}
-
-.item-notification-item-box {
-  @extend .inventory-slot;
-  height: $gridSize;
-  width: $gridSize;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// TOOLTIP — glass panel, same spec as inventory panels
+// TOOLTIP — glass panel
 // ═══════════════════════════════════════════════════════════════════════════════
 
 .tooltip-wrapper {
@@ -626,66 +928,28 @@ input[type='number']::-webkit-outer-spin-button {
   flex-direction: column;
   gap: 4px;
   color: $zinc-300;
-  p {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: $zinc-400;
-  }
+  p { font-size: 12px; font-weight: 400; line-height: 1.5; color: $zinc-400; }
 }
 
 .tooltip-header-wrapper {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 4px;
-  p {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: $tracking-tight;
-    color: $white;
-  }
+  p { font-size: 14px; font-weight: 500; letter-spacing: $tracking-tight; color: #fff; }
 }
 
-.tooltip-description {
-  padding-top: 4px;
-}
-
-.tooltip-markdown > p {
-  margin: 0;
-  font-size: 12px;
-  color: $zinc-400;
-}
+.tooltip-description    { padding-top: 4px; }
+.tooltip-markdown > p   { margin: 0; font-size: 12px; color: $zinc-400; }
 
 .tooltip-crafting-duration {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  padding-top: 4px;
-  svg { flex-shrink: 0; }
+  display: flex; align-items: center; justify-content: center; gap: 4px; padding-top: 4px;
   p { font-size: 12px; color: $zinc-400; }
 }
 
-.tooltip-ingredients {
-  padding-top: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.tooltip-ingredient {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  img {
-    width: 26px;
-    height: 26px;
-    border-radius: 6px;
-  }
+.tooltip-ingredients  { padding-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+.tooltip-ingredient   { display: flex; align-items: center; gap: 6px;
+  img { width: 26px; height: 26px; border-radius: 6px; }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -715,16 +979,376 @@ input[type='number']::-webkit-outer-spin-button {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.15s;
+
   &:active { transform: none; }
-  &:hover  { background-color: rgba(255, 255, 255, 0.07); }
+  &:hover  { background-color: rgba(255,255,255,0.07); }
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// BUTTON PRESS FEEDBACK
+// USEFUL-CONTROLS DIALOG + FLOATING TRIGGER
 // ═══════════════════════════════════════════════════════════════════════════════
 
-button:active {
-  transform: translateY(2px);
+.useful-controls-dialog {
+  @include glass;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $zinc-300;
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+  z-index: 50;
+}
+
+.useful-controls-dialog-overlay { background-color: rgba(0,0,0,0.55); }
+
+.useful-controls-dialog-title {
+  display: flex; width: 100%; justify-content: space-between; align-items: center;
+  font-size: 16px; font-weight: 500; letter-spacing: $tracking-tight; color: #fff;
+}
+
+.useful-controls-dialog-close {
+  width: 28px; height: 28px; padding: 6px; display: flex; justify-content: center;
+  align-items: center; border-radius: 8px; fill: $zinc-400; cursor: pointer;
+  transition: background-color 0.15s;
+  &:hover { background-color: rgba(255,255,255,0.07); }
+}
+
+.useful-controls-content-wrapper { display: flex; flex-direction: column; gap: 16px; }
+
+.divider { width: 100%; height: 1px; background-color: rgba(255,255,255,0.07); }
+
+// Floating "?" info trigger button
+.useful-controls-button {
+  position: fixed !important;
+  bottom: 24px;
+  right: 24px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px !important;
+  background-color: rgba($zinc-800, 0.70) !important;
+  border: 1px solid $glass-border !important;
+  color: $zinc-400;
+  fill: $zinc-400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 150ms;
+  &:hover { background-color: rgba($zinc-700, 0.80) !important; border-color: rgba(255,255,255,0.15) !important; }
+}
+
+.useful-controls-exit-button {
+  position: absolute !important;
+  right: 8px; top: 8px;
+  border-radius: 8px !important;
+  color: $zinc-500 !important;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// EQUIPMENT SLOTS (NEW - from reference HTML)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.equipment-panel {
+  @include glass;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.equipment-header {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  color: $zinc-500;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  height: 100%;
+  align-content: start;
+}
+
+.equipment-slot {
+  @extend .inventory-slot;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &.empty {
+    .equipment-icon {
+      color: $zinc-600;
+      transition: color 0.15s;
+    }
+
+    .equipment-label {
+      color: $zinc-600;
+      transition: color 0.15s;
+    }
+
+    &:hover {
+      border-color: rgba($zinc-700, 0.5);
+
+      .equipment-icon {
+        color: $zinc-400;
+      }
+
+      .equipment-label {
+        color: $zinc-500;
+      }
+    }
+  }
+
+  &.equipped {
+    border-color: rgba($zinc-700, 0.5);
+    background: rgba($zinc-800, 0.2);
+
+    .equipment-icon {
+      color: $zinc-200;
+    }
+
+    .equipment-label {
+      color: $zinc-400;
+    }
+  }
+}
+
+.equipment-icon {
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipment-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide;
+  margin-top: 8px;
+}
+
+.equipment-status-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: $emerald-500;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba($emerald-500, 0.5);
+}
+
+.equipment-durability {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba($emerald-500, 0.2);
+
+  .equipment-durability-fill {
+    height: 100%;
+    background-color: $emerald-500;
+    transition: width 0.3s ease;
+  }
+}
+
+.equipment-actions {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  gap: 8px;
+}
+
+.equipment-action-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: $zinc-800;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: $zinc-300;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background-color: $zinc-700;
+    border-color: rgba(255,255,255,0.1);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NOTIFICATION TOAST (NEW - from reference HTML bottom-right)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.notification-toast {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  @include glass;
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 2px solid $emerald-500;
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+  box-shadow: $glass-shadow, 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+.notification-icon {
+  background-color: rgba($emerald-500, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  color: $emerald-400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notification-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.notification-message {
+  font-size: 10px;
+  color: $zinc-400;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECONDARY INVENTORY PANEL (RIGHT COLUMN)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.secondary-inventory-wrapper {
+  @include glass;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 100%;
+  position: relative;
+
+  // Top accent line (subtle centered gradient)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba($zinc-700, 0.5) 50%, transparent 100%);
+    border-radius: 1rem 1rem 0 0;
+    opacity: 0.5;
+  }
+}
+
+.secondary-inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.secondary-inventory-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+}
+
+.secondary-inventory-icon {
+  color: $zinc-400;
+  font-size: 18px;
+}
+
+.secondary-inventory-weight {
+  font-size: 12px;
+  color: $zinc-500;
+  background-color: rgba($zinc-900, 0.50);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.weight-current {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.weight-separator {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 2px;
+}
+
+.weight-max {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weight-unit {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  margin-left: 1px;
+}
+
+.secondary-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $gridGap;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  align-content: start;
+}
+
+.secondary-inventory-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+
+.secondary-inventory-label {
+  font-size: 10px;
+  color: $zinc-600;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  font-weight: 500;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════

@@ -28,32 +28,38 @@ const InventoryHotbar: React.FC = () => {
     <SlideUp in={hotbarVisible}>
       <div className="hotbar-container">
         {items.map((item) => (
-          <div
-            className="hotbar-item-slot"
-            style={{
-              backgroundImage: `url(${item?.name ? getItemUrl(item as SlotWithItem) : 'none'}`,
-            }}
-            key={`hotbar-${item.slot}`}
-          >
+          <div className="hotbar-item-slot" key={`hotbar-${item.slot}`}>
+            {/* Slot number — hotkey indicator, always visible */}
+            <div className="inventory-slot-number">{item.slot}</div>
+
+            {/* Item image — centered <img>, consistent with inventory slots */}
+            {isSlotWithItem(item) && (
+              <div className="slot-image-frame">
+                <img
+                  className="slot-image"
+                  src={getItemUrl(item as SlotWithItem) || ''}
+                  alt=""
+                  draggable={false}
+                />
+              </div>
+            )}
+
+            {/* Overlay content when slot is populated */}
             {isSlotWithItem(item) && (
               <div className="item-slot-wrapper">
-                <div className="hotbar-slot-header-wrapper">
-                  <div className="inventory-slot-number">{item.slot}</div>
-                  <div className="item-slot-info-wrapper">
-                    <p>
-                      {item.weight > 0
-                        ? item.weight >= 1000
-                          ? `${(item.weight / 1000).toLocaleString('en-us', {
-                              minimumFractionDigits: 2,
-                            })}kg `
-                          : `${item.weight.toLocaleString('en-us', {
-                              minimumFractionDigits: 0,
-                            })}g `
-                        : ''}
-                    </p>
-                    <p>{item.count ? item.count.toLocaleString('en-us') + `x` : ''}</p>
-                  </div>
+                {/* Count / weight badge — bottom-right */}
+                <div className="item-slot-info-wrapper">
+                  <p>
+                    {item.weight > 0
+                      ? item.weight >= 1000
+                        ? `${(item.weight / 1000).toLocaleString('en-us', { minimumFractionDigits: 2 })}kg`
+                        : `${item.weight.toLocaleString('en-us', { minimumFractionDigits: 0 })}g`
+                      : ''}
+                  </p>
+                  <p>{item.count ? item.count.toLocaleString('en-us') + 'x' : ''}</p>
                 </div>
+
+                {/* Durability bar + label */}
                 <div>
                   {item?.durability !== undefined && <WeightBar percent={item.durability} durability />}
                   <div className="inventory-slot-label-box">
