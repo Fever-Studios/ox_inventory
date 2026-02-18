@@ -1,110 +1,125 @@
-$mainColor: #22232c;
-$textColor: #c1c2c5;
-$mainFont: Roboto;
+// ═══════════════════════════════════════════════════════════════════════════════
+// AURA DESIGN SYSTEM — Absolute Fidelity Override for ox_inventory
+// All values sourced directly from aura_ui.html reference.
+// ═══════════════════════════════════════════════════════════════════════════════
 
-$secondaryColor: rgba(12, 12, 12, 0.4);
-$secondaryColorHighlight: #33343F;
-$secondaryColorLight: rgba(0, 0, 0, 0.5);
-$secondaryColorDark: rgba(12, 12, 12, 0.8);
+// ─── Aura Color Tokens ────────────────────────────────────────────────────────
+$zinc-950:  #09090b;
+$zinc-900:  #18181b;
+$zinc-800:  #27272a;
+$zinc-700:  #3f3f46;
+$zinc-600:  #52525b;
+$zinc-500:  #71717a;
+$zinc-400:  #a1a1aa;
+$zinc-300:  #d4d4d8;
+$zinc-200:  #e4e4e7;
+$white:     #ffffff;
 
-$gridCols: 5;
-$gridRows: 5;
-$gridSize: 10.2vh;
-$gridGap: 2px;
-$containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
+$emerald:   #10b981;
+$rose:      #f43f5e;
+$cyan:      #06b6d4;
+$amber:     #f59e0b;
+$blue:      #3b82f6;
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-    'Droid Sans', 'Helvetica Neue', sans-serif;
+// ─── Aura Panel Glass — exact values from reference ───────────────────────────
+// .glass-panel { background: rgba(10,10,10,0.75); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.08); }
+$glass-bg:      rgba(10, 10, 10, 0.75);
+$glass-border:  rgba(255, 255, 255, 0.08);
+$glass-shadow:  0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+// ─── Aura Slot Tokens — exact values from reference ───────────────────────────
+// .slot-bg { background: linear-gradient(180deg,rgba(255,255,255,0.03)…); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+// .slot-active:hover { background: linear-gradient(…rgba(255,255,255,0.07)…); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1),… }
+$slot-bg-gradient:       linear-gradient(180deg, rgba(255, 255, 255, 0.030) 0%, rgba(255, 255, 255, 0.010) 100%);
+$slot-active-gradient:   linear-gradient(180deg, rgba(255, 255, 255, 0.070) 0%, rgba(255, 255, 255, 0.040) 100%);
+$slot-border-inset:      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+$slot-hover-border:      inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+$slot-hover-shadow:      0 4px 12px rgba(0, 0, 0, 0.20);
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font:        'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$tracking-tight:  -0.025em;
+$tracking-wide:    0.06em;
+
+// ─── Grid Layout ──────────────────────────────────────────────────────────────
+$gridCols:  5;
+$gridRows:  5;
+$gridSize:  10.2vh;   // slot width = slot height (square)
+$gridGap:   8px;      // reference uses gap-3 (12px); 8px is balanced for vh slots
+
+// ─── Glass Panel Mixin — exact from reference ─────────────────────────────────
+@mixin glass {
+  background: $glass-bg;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid $glass-border;
+  box-shadow: $glass-shadow;
+  border-radius: 16px;
+}
+
+// ─── Universal Font & Box Model ───────────────────────────────────────────────
+// Force Inter everywhere — no element should inherit Roboto or system fonts.
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: $font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+// ─── Selection ────────────────────────────────────────────────────────────────
+::selection {
+  background-color: $zinc-700;
+  color: $white;
+}
+
+// ─── Base ─────────────────────────────────────────────────────────────────────
+body {
+  margin: 0;
   height: 100vh;
   background: none !important;
   overflow: hidden !important;
   user-select: none;
+  color: $zinc-300;
 }
 
 #root {
   height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+// ─── Scrollbar — thin, invisible-when-idle ────────────────────────────────────
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  &:hover { background: rgba(255, 255, 255, 0.15); }
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
+// ─── Reset paragraphs ─────────────────────────────────────────────────────────
 p {
   margin: 0;
   padding: 0;
-  font-family: $mainFont;
 }
 
+// Hide number input arrows
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
 }
 
+// ─── App root ─────────────────────────────────────────────────────────────────
 .app-wrapper {
   height: 100%;
   width: 100%;
-  color: white;
+  color: $zinc-300;
 }
 
-.context-menu-list {
-  min-width: 200px;
-  background-color: $mainColor;
-  color: $textColor;
-  padding: 4px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
-  border-radius: 4px;
-  outline: none;
-  display: flex;
-  flex-direction: column;
-}
-
-.context-menu-item  {
-  padding: 8px;
-  border-radius: 4px;
-  background-color: transparent;
-  outline: none;
-  border: none;
-  color: $textColor;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  &:active {
-    transform: none;
-  }
-  &:hover {
-    background-color: $secondaryColorHighlight;
-    cursor: pointer;
-  }
-}
-
-.tooltip-description {
-  padding-top: 5px;
-}
-
-.tooltip-markdown > p {
-  margin: 0;
-}
-
-button:active {
-  transform: translateY(3px);
-}
-
+// ─── Drag preview ─────────────────────────────────────────────────────────────
 .item-drag-preview {
   width: 7.7vh;
   height: 7.7vh;
-  z-index: 1;
+  z-index: 100;
   position: fixed;
   pointer-events: none;
   top: 0;
@@ -115,78 +130,89 @@ button:active {
   image-rendering: -webkit-optimize-contrast;
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// LAYOUT
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Outer wrapper — three-column (left panel | controls | right panel)
 .inventory-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 100%;
-
-  gap: 20px;
+  gap: 24px;          // reference: gap-6
+  padding: 0 16px;
 }
 
+// ─── Center control strip ─────────────────────────────────────────────────────
 .inventory-control {
   display: flex;
 
   .inventory-control-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     justify-content: center;
     align-items: center;
   }
 
   .inventory-control-input {
-    transition: 200ms;
-    padding: 16px 8px;
-    border-radius: 2.5%;
-    font-family: $mainFont;
-    font-size: 16px;
+    width: 72px;
+    padding: 12px 8px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
     text-align: center;
     outline: none;
-    border: none;
-    color: #fff;
-    background-color: $secondaryColor;
-    &:focus-within {
-      background-color: $secondaryColorDark;
+    color: $white;
+    background-color: rgba($zinc-800, 0.6);
+    border: 1px solid $glass-border;
+    transition: border-color 150ms, background-color 150ms;
+    &:focus {
+      border-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba($zinc-900, 0.85);
     }
   }
 
   .inventory-control-button {
-    font-size: 14px;
-    color: #fff;
-    background-color: $secondaryColor;
-    transition: 200ms;
-    padding: 12px 8px;
-    border-radius: 2.5%;
-    border: none;
-    text-transform: uppercase;
-    font-family: $mainFont;
-    width: 100%;
+    width: 72px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    font-size: 11px;
     font-weight: 500;
+    letter-spacing: $tracking-wide;
+    text-transform: uppercase;
+    color: $zinc-300;
+    background-color: rgba($zinc-800, 0.6);
+    border: 1px solid $glass-border;
+    transition: background-color 150ms, border-color 150ms;
+    cursor: pointer;
     &:hover {
-      background-color: $secondaryColorDark;
+      background-color: rgba($zinc-700, 0.7);
+      border-color: rgba(255, 255, 255, 0.15);
     }
   }
 }
 
+// ─── Useful-controls dialog ───────────────────────────────────────────────────
 .useful-controls-dialog {
-  background-color: $mainColor;
+  @include glass;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: $textColor;
-  width: 450px;
+  color: $zinc-300;
+  width: 460px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  border-radius: 4px;
+  padding: 24px;
   gap: 16px;
 }
 
 .useful-controls-dialog-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.55);
 }
 
 .useful-controls-dialog-title {
@@ -194,54 +220,56 @@ button:active {
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: $white;
 }
 
 .useful-controls-dialog-close {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   padding: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 4px;
-  fill: $textColor;
-  &:hover {
-    background-color: $secondaryColorHighlight;
-    cursor: pointer;
-  }
+  border-radius: 8px;
+  fill: $zinc-400;
+  cursor: pointer;
+  &:hover { background-color: rgba(255, 255, 255, 0.07); }
 }
 
 .useful-controls-content-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .divider {
   width: 100%;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.07);
 }
 
 .useful-controls-button {
   position: absolute !important;
-  bottom: 25px;
-  right: 25px;
-  transition: 200ms !important;
-  border: none;
-  color: white;
-  width: 52px;
-  height: 52px;
+  bottom: 24px;
+  right: 24px;
+  transition: 150ms !important;
+  border: 1px solid $glass-border !important;
+  color: $zinc-400;
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
-  fill: white;
-  border-radius: 5% !important;
-  background-color: $secondaryColor !important;
+  fill: $zinc-400;
+  border-radius: 12px !important;
+  background-color: rgba($zinc-800, 0.7) !important;
+  cursor: pointer;
   &:hover {
-    background-color: $secondaryColorDark !important;
-    cursor: pointer;
+    background-color: rgba($zinc-700, 0.8) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
   }
 }
 
@@ -249,126 +277,242 @@ button:active {
   position: absolute !important;
   right: 8px;
   top: 8px;
-  border-radius: 2.5% !important;
-  color: grey !important;
+  border-radius: 8px !important;
+  color: $zinc-500 !important;
 }
 
-// Dialog is used fro useful controls window
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY GRID PANELS — glass-panel from reference
+// ═══════════════════════════════════════════════════════════════════════════════
 
-
-// inventory grids
 .inventory-grid-wrapper {
   display: flex;
   flex-direction: column;
-  gap: calc($gridGap * 2);
+  gap: 16px;            // spacious gap between header, weight bar, and grid
+  @include glass;       // exact rgba(10,10,10,0.75) + blur(24px) + border
+  padding: 24px;        // reference: p-6
 }
+
+// Panel header: label (left) + weight (right)
 .inventory-grid-header-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+
   p {
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: $tracking-tight;  // tracking-tight from reference
+    color: $white;
+
+    // The weight text (second p) is smaller and muted
+    &:last-child {
+      font-size: 12px;
+      font-weight: 400;
+      color: $zinc-400;
+      letter-spacing: 0;
+      background-color: rgba($zinc-900, 0.5);
+      border: 1px solid $glass-border;
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
   }
 }
 
+// Scrollable slot grid
 .inventory-grid-container {
   display: grid;
-  height: $containerSize;
   grid-template-columns: repeat($gridCols, $gridSize);
-  grid-auto-rows: $gridSize + 0.22vh;
-  gap: $gridGap;
-  overflow-y: scroll;
+  grid-auto-rows: $gridSize;    // perfectly square slots
+  gap: $gridGap;                // 8px — spacious modern layout
+  max-height: 54vh;             // ~5 rows visible, rest scrolls
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;           // tiny inset for scrollbar
 }
 
-// inventory slots
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY SLOTS — exact .slot-bg and .slot-active from reference
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// CRITICAL: The component sets `backgroundImage` as an inline style.
+// Inline styles beat CSS class `background-image`. We use a ::before
+// pseudo-element for the gradient so it ALWAYS renders regardless of the
+// inline backgroundImage on the host element.
+//
 .inventory-slot {
-  background-color: $secondaryColor;
+  // Geometry
+  position: relative;
+  overflow: hidden;             // clips ::before gradient to rounded corners
+  border-radius: 12px;          // rounded-xl from reference
+  border: 1px solid transparent;
+
+  // Item image properties (set via inline style by InventorySlot.tsx)
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 2.5%;
-  image-rendering: -webkit-optimize-contrast;
-  position: relative;
   background-size: 7vh;
-  color: $textColor;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
-}
+  image-rendering: -webkit-optimize-contrast;
 
-.inventory-slot-label-box {
-  background-color: $mainColor;
-  color: $textColor;
-  text-align: center;
-  border-bottom-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  border-top-color: rgba(0, 0, 0, 0.2);
-  border-top-style: inset;
-  border-top-width: 1px;
-}
+  // Inner border ring — slot-bg style
+  box-shadow: $slot-border-inset;
 
-.inventory-slot-label-text {
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 2px 3px;
-  font-weight: 400;
-  font-family: $mainFont;
-  font-size: 12px;
-}
+  // Color / transition
+  color: $zinc-300;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
 
-.inventory-slot-number {
-  background-color: white;
-  color: black;
-  height: 12px;
-  border-top-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  padding: 3px;
-  font-size: 12px;
-  font-family: $mainFont;
-}
+  // ── slot-bg gradient via ::before (immune to inline backgroundImage) ──────
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: $slot-bg-gradient;
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.15s ease;
+  }
 
-.item-slot-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  p {
-    font-size: 12px;
+  // ── slot-active hover ─────────────────────────────────────────────────────
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.20);
+    box-shadow: $slot-hover-border, $slot-hover-shadow;
+
+    &::before {
+      background: $slot-active-gradient;
+    }
   }
 }
 
+// ─── Slot inner wrapper ───────────────────────────────────────────────────────
+.item-slot-wrapper {
+  position: relative;     // containing block for absolutely positioned children
+  z-index: 1;             // above the ::before gradient layer
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  p { font-size: 10px; }
+}
+
+// ─── Header row (slot number + count badge) ───────────────────────────────────
 .item-slot-header-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  padding: 4px;
 }
 
 .item-hotslot-header-wrapper {
   @extend .item-slot-header-wrapper;
-  justify-content: space-between !important;
+  justify-content: space-between;
 }
 
+// ─── Hotbar slot number — top-left pill ───────────────────────────────────────
+// Reference: "text-[10px] font-semibold text-zinc-500"
+.inventory-slot-number {
+  font-size: 10px;
+  font-weight: 600;
+  font-family: $font;
+  color: $zinc-500;
+  line-height: 1;
+  background-color: transparent;
+  padding: 2px 1px;
+  border-radius: 0;
+  height: auto;
+}
+
+// ─── Count / weight badge — positioned bottom-right of slot ──────────────────
+// Reference: "bg-zinc-900/80 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-medium text-zinc-400 border border-white/5"
 .item-slot-info-wrapper {
+  position: absolute;
+  z-index: 3;
+  bottom: 5px;
+  right: 4px;
+
   display: flex;
   flex-direction: row;
-  align-self: flex-end;
-  padding: 3px;
-  gap: 3px;
+  gap: 2px;
+  align-items: center;
+
+  background-color: rgba($zinc-950, 0.80);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  padding: 1px 5px;
+
   p {
-    font-size: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    color: $zinc-400;
+    line-height: 1.4;
+    white-space: nowrap;
   }
 }
 
+// ─── Bottom section of slot wrapper ──────────────────────────────────────────
+// Contains durability bar + price + label.
+// We let flex push this to the bottom (spacer above is the header, content
+// grows to fill the middle via the image). The price and label are styled here.
+
+// ─── Item label — gradient overlay at bottom ──────────────────────────────────
+// Instead of a hard dark strip, the label fades in as a gradient so the item
+// image breathes. Position absolute so it doesn't compress the icon area.
+.inventory-slot-label-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  // Gradient: transparent at top, dark at bottom (like a vignette)
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, transparent 100%);
+  padding: 12px 4px 4px;
+}
+
+.inventory-slot-label-text {
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  font-weight: 500;
+  font-family: $font;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 0 3px;
+}
+
+// ─── Durability bar — pinned to the very bottom of the slot ──────────────────
+// Reference: "absolute bottom-0 left-0 w-full h-1 bg-zinc-800" inner fill coloured
+.durability-bar {
+  position: absolute;
+  z-index: 4;         // above label overlay
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-radius: 0 0 12px 12px;  // matches parent corner radius
+  overflow: hidden;
+  background: rgba($zinc-800, 0.40);
+}
+
+// ─── Price / currency wrappers ────────────────────────────────────────────────
 .item-slot-currency-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding-right: 3px;
+  padding: 2px 4px;
   p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
+    font-size: 11px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   }
 }
 
@@ -376,78 +520,39 @@ button:active {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding-right: 3px;
+  padding: 2px 4px;
   p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
+    font-size: 11px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// PROGRESS BARS — Aura "Vitals" style
+// reference: "bg-zinc-800/50 rounded-full h-1.5 overflow-hidden"
+// WeightBar injects fill color via inline `backgroundColor` — we only style the track.
+// ═══════════════════════════════════════════════════════════════════════════════
 
-.tooltip-wrapper {
-  pointer-events: none;
-  display: flex;
-  background-color: $mainColor;
-  width: 200px;
-  padding: 8px;
-  flex-direction: column;
-  min-width: 200px;
-  color: $textColor;
-  font-family: $mainFont;
-  border-radius: 4px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
-  p {
-    font-size: 12px;
-    font-weight: 400;
-  }
+// Weight bar (inventory carry capacity — shown in grid panel header)
+.weight-bar {
+  background: rgba($zinc-800, 0.50);
+  height: 6px;          // h-1.5 = 6px
+  border-radius: 9999px;
+  overflow: hidden;
+  border: none;
 }
 
-.tooltip-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  p {
-    font-size: 15px;
-    font-weight: 400;
-  }
-}
+// (durability-bar moved above, in slot section)
 
-.tooltip-crafting-duration {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  svg {
-    padding-right: 3px;
-  }
-  p {
-    font-size: 14px;
-  }
-}
+// ═══════════════════════════════════════════════════════════════════════════════
+// HOTBAR
+// ═══════════════════════════════════════════════════════════════════════════════
 
-.tooltip-ingredients {
-  padding-top: 5px;
-}
-
-.tooltip-ingredient {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  img {
-    width: 28px;
-    height: 28px;
-    padding-right: 5px;
-  }
-}
-
-// hotbar
 .hotbar-container {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: $gridGap;
   justify-content: center;
   width: 100%;
   position: absolute;
@@ -458,6 +563,8 @@ button:active {
   @extend .inventory-slot;
   width: $gridSize;
   height: $gridSize;
+  // Slightly more visible inner border for hotbar context
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .hotbar-slot-header-wrapper {
@@ -466,34 +573,36 @@ button:active {
   justify-content: space-between;
 }
 
-// item notifications
+// ═══════════════════════════════════════════════════════════════════════════════
+// ITEM NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════════════════════
 
 .item-notification-container {
   display: flex;
-  overflow-x: scroll;
+  overflow-x: hidden;
   flex-wrap: nowrap;
-  gap: 2px;
+  gap: 4px;
   position: absolute;
   bottom: 20vh;
   left: 50%;
-  width: 100%;
-  margin-left: calc(50% - calc($gridSize/2));
+  width: auto;
   transform: translate(-50%);
 }
 
 .item-notification-action-box {
   width: 100%;
-  color: $textColor;
-  background-color: $secondaryColor;
+  color: $zinc-400;
+  background-color: rgba($zinc-800, 0.70);
   text-transform: uppercase;
   text-align: center;
-  border-top-left-radius: 0.25vh;
-  border-top-right-radius: 0.25vh;
-  font-family: $mainFont;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom: none;
   p {
-    font-size: 11px;
-    padding: 2px;
+    font-size: 9px;
+    padding: 3px 4px;
     font-weight: 600;
+    letter-spacing: 0.07em;
   }
 }
 
@@ -503,52 +612,131 @@ button:active {
   width: $gridSize;
 }
 
-.durability-bar {
-  background: rgba(0, 0, 0, 0.5);
-  height: 3px;
-  overflow: hidden;
+// ═══════════════════════════════════════════════════════════════════════════════
+// TOOLTIP — glass panel, same spec as inventory panels
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.tooltip-wrapper {
+  pointer-events: none;
+  @include glass;
+  width: 220px;
+  min-width: 220px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: $zinc-300;
+  p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $zinc-400;
+  }
 }
 
-.weight-bar {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px inset rgba(0, 0, 0, 0.1);
-  height: 0.8vh;
-  border-radius: 5%;
-  overflow: hidden;
+.tooltip-header-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  p {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: $tracking-tight;
+    color: $white;
+  }
 }
 
-.transition-fade-enter {
-  opacity: 0;
+.tooltip-description {
+  padding-top: 4px;
 }
 
-.transition-fade-enter-active {
-  opacity: 1;
-  transition: opacity 200ms;
+.tooltip-markdown > p {
+  margin: 0;
+  font-size: 12px;
+  color: $zinc-400;
 }
 
-.transition-fade-exit {
-  opacity: 1;
+.tooltip-crafting-duration {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding-top: 4px;
+  svg { flex-shrink: 0; }
+  p { font-size: 12px; color: $zinc-400; }
 }
 
-.transition-fade-exit-active {
-  opacity: 0;
-  transition: opacity 200ms;
+.tooltip-ingredients {
+  padding-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.transition-slide-up-enter {
-  transform: translateY(200px)
+.tooltip-ingredient {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  img {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+  }
 }
 
-.transition-slide-up-enter-active {
-  transform: translateY(0px);
-  transition: all 200ms;
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONTEXT MENU — glass panel
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.context-menu-list {
+  min-width: 180px;
+  @include glass;
+  color: $zinc-300;
+  padding: 4px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
 }
 
-.transition-slide-up-exit {
-  transform: translateY(0px);
+.context-menu-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: $zinc-300;
+  font-size: 13px;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  &:active { transform: none; }
+  &:hover  { background-color: rgba(255, 255, 255, 0.07); }
 }
 
-.transition-slide-up-exit-active {
-  transform: translateY(200px);
-  transition: all 200ms;
+// ═══════════════════════════════════════════════════════════════════════════════
+// BUTTON PRESS FEEDBACK
+// ═══════════════════════════════════════════════════════════════════════════════
+
+button:active {
+  transform: translateY(2px);
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TRANSITIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.transition-fade-enter          { opacity: 0; }
+.transition-fade-enter-active   { opacity: 1; transition: opacity 200ms ease; }
+.transition-fade-exit           { opacity: 1; }
+.transition-fade-exit-active    { opacity: 0; transition: opacity 200ms ease; }
+
+.transition-slide-up-enter        { transform: translateY(200px); }
+.transition-slide-up-enter-active { transform: translateY(0); transition: transform 200ms ease; }
+.transition-slide-up-exit         { transform: translateY(0); }
+.transition-slide-up-exit-active  { transform: translateY(200px); transition: transform 200ms ease; }
