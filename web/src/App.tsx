@@ -60,7 +60,7 @@ debugData([
         ],
       },
       rightInventory: {
-        id: 'shop',
+        id: 'drop',
         type: 'drop',
         slots: 5000,
         label: 'Sol',

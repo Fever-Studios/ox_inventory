@@ -128,23 +128,27 @@ const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, showWeight = t
   const typeIcon = TYPE_ICON_MAP[inventory.type] ?? <BoxIcon />;
 
   // Titre dynamique : 'Inventaire' pour le joueur, 'Sol' pour les drops au sol, label par défaut sinon
-  const displayTitle = inventory.type === 'player' ? 'Inventaire' : inventory.type === 'drop' ? 'Sol' : inventory.label;
+  const displayTitle =
+    inventory.type === 'player' ? 'Inventaire' : inventory.type !== 'player' ? 'Sol' : inventory.label;
 
   return (
     <div
-      className={`inventory-panel inventory-grid-wrapper ${inventory.type === 'drop' ? 'h-fit' : ''}`}
-      style={{ pointerEvents: isBusy ? 'none' : 'auto' }}
+      className="inventory-panel inventory-grid-wrapper"
+      style={{
+        pointerEvents: isBusy ? 'none' : 'auto',
+        // 1. On dit au panneau global de s'adapter au contenu s'il est à droite
+        height: inventory.type !== 'player' ? 'fit-content' : '100%',
+        alignSelf: inventory.type !== 'player' ? 'start' : 'stretch'
+      }}
     >
       {/* ── Panel header ─────────────────────────────────── */}
       <div className="inventory-grid-header">
         <div className="inventory-grid-header-wrapper">
-          {/* Left: small type icon + inventory label */}
           <div className="grid-header-title">
             <span className="grid-header-icon">{typeIcon}</span>
             <span>{displayTitle}</span>
           </div>
 
-          {/* Right: weight pill + filter input */}
           <div className="grid-header-right">
             <input
               className="grid-header-filter"
@@ -156,14 +160,22 @@ const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, showWeight = t
           </div>
         </div>
 
-        {/* Weight bar only on inventories that show weight */}
         {showWeight && inventory.maxWeight !== undefined && inventory.maxWeight > 0 && inventory.type !== 'drop' && (
           <WeightBar percent={(weight / inventory.maxWeight) * 100} />
         )}
       </div>
 
-      {/* ── Slot grid (scrollable, full width, 5 columns) ────────────────────────── */}
-      <div className="inventory-grid-container" ref={containerRef}>
+      {/* ── Slot grid ────────────────────────── */}
+      <div
+        className="inventory-grid-container"
+        ref={containerRef}
+        style={{
+          // 2. LE COUPABLE EST ICI : On désactive le "flex: 1" pour les inventaires de droite !
+          flex: inventory.type !== 'player' ? 'none' : '1 1 auto',
+          // On coupe le scroll inutile à droite pour éviter les barres invisibles
+          overflowY: inventory.type !== 'player' ? 'hidden' : 'auto'
+        }}
+      >
         {displayItems.map((item, index) => (
           <InventorySlot
             key={`${inventory.type}-${inventory.id}-${item.slot}`}
@@ -176,7 +188,7 @@ const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, showWeight = t
         ))}
       </div>
 
-      {/* ── Action bar (player inventory only) ───────────── */}
+      {/* ── Action bar ───────────── */}
       {showActionBar && <InventoryActionBar />}
     </div>
   );
