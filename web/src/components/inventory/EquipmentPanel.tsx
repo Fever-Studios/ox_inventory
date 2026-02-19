@@ -110,7 +110,10 @@ const EquipmentPanel: React.FC = () => {
     <div className="equipment-panel">
       <div className="equipment-header">Tenue & Équipement</div>
 
-      <div className="equipment-grid">
+      <div className="equipment-grid" style={{
+        flex: 1,
+        minHeight: 0
+      }}>
         {EQUIPMENT_LIST.map((item) => (
           <div key={item.id} className="equipment-slot empty">
             <div className="equipment-icon">{item.icon}</div>

@@ -61,8 +61,8 @@ debugData([
       },
       rightInventory: {
         id: 'drop',
-        type: 'drop',
-        slots: 5000,
+        type: 'shop',
+        slots: 50,
         label: 'Sol',
         weight: 3000,
         maxWeight: 5000,

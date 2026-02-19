@@ -113,7 +113,7 @@ const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, showWeight = t
       }
 
       // On calcule combien de cases afficher (Dernier item + 6 cases vides, minimum 10)
-      const neededSlots = Math.max(10, lastOccupiedIndex + 5);
+      const neededSlots = Math.max(10, lastOccupiedIndex + 6);
       const slotsToKeep = Math.ceil(neededSlots / 5) * 5; // Arrondi pour faire des lignes complètes de 5
 
       console.log(`[Ox_Inventory] Nettoyage : Garde ${slotsToKeep} slots sur ${itemsToConsider.length}`);
@@ -137,7 +137,7 @@ const InventoryGrid: React.FC<InventoryGridProps> = ({ inventory, showWeight = t
       style={{
         pointerEvents: isBusy ? 'none' : 'auto',
         // 1. On dit au panneau global de s'adapter au contenu s'il est à droite
-        height: inventory.type !== 'player' ? 'fit-content' : '100%',
+        height: inventory.type !== 'player' ? 'auto' : '100%',
         alignSelf: inventory.type !== 'player' ? 'start' : 'stretch'
       }}
     >

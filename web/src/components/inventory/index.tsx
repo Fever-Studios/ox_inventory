@@ -66,13 +66,23 @@ const Inventory: React.FC = () => {
           }}
         >
           <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem', height: '100%'}}>
-          {/* Left column: profile card with vitals - height fits content */}
-          <div className="inventory-panel h-fit">
-            <PlayerCard />
-          </div>
+            {/* Left column: profile card with vitals - height fits content */}
+            <div className="inventory-panel h-fit">
+              <PlayerCard />
+            </div>
 
-            <EquipmentPanel />
-
+            {/* Nouveau wrapper (Même style que tes autres colonnes) */}
+            <div
+              className="inventory-panel"
+              style={{
+                flex: 1, // Dit à la div de prendre tout l'espace restant sous la PlayerCard
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden'
+              }}
+            >
+              <EquipmentPanel />
+            </div>
           </div>
 
           {/* Center column: player pockets with action bar at the bottom */}
@@ -91,7 +101,6 @@ const Inventory: React.FC = () => {
           <div
             className="inventory-panel"
             style={{
-              height: '100%',
               display: 'flex',
               flexDirection: 'column',
             }}
