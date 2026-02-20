@@ -1,0 +1,514 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY GRID PANELS — center (pockets) and right (ground/chest)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-grid-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px 12px 12px;
+  min-height: 0;
+  position: relative;
+  // Les styles visuels sont maintenant gérés par .inventory-panel
+}
+
+.inventory-grid-header {
+  padding: 12px 12px 12px 12px;
+}
+
+// Panel header row — icon+label (left) + weight pill+filter (right)
+.inventory-grid-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+// Left: icon + inventory label
+.grid-header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+  padding: 10px;
+}
+
+.grid-header-icon {
+  color: $zinc-400;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+// Right: weight pill + filter input
+.grid-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Weight pill
+.grid-weight-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+
+  .font-semibold {
+    font-weight: 600;
+    color: $zinc-400;
+  }
+}
+
+// Filter input — right side of header
+// "bg-zinc-900/60 border border-white/6 rounded-md text-xs text-zinc-300"
+.grid-header-filter {
+  width: 160px;
+  padding: 6px 12px;
+  padding-left: 36px;
+  border-radius: 8px;
+  background-color: rgba($zinc-900, 0.50);
+  border: 1px solid rgba(255,255,255,0.05);
+  color: $zinc-300;
+  font-size: 12px;
+  font-weight: 400;
+  outline: none;
+  transition: border-color 0.15s, width 0.2s, box-shadow 0.15s;
+
+  &::placeholder { color: $zinc-600; }
+
+  &:focus {
+    border-color: $zinc-700;
+    box-shadow: 0 0 0 1px $zinc-700;
+  }
+}
+
+// Scrollable slot grid — flex:1 fills remaining panel height
+.inventory-grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: max-content;
+  gap: 8px;
+  padding: 12px;
+  overflow-y: auto;
+  width: 100%;
+  flex: 1;
+  align-content: start;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY SLOTS — exact .slot-bg and .slot-active from reference
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// CRITICAL: The ::before pseudo-element carries the gradient.
+// The component injects `backgroundImage` as an inline style which would
+// override any CSS background-image — ::before is immune to this.
+//
+.inventory-slot {
+  position: relative;
+  overflow: hidden;           // clips ::before + absolute children to rounded corners
+  border-radius: 12px;        // rounded-xl
+  border: 1px solid transparent;
+  box-shadow: $slot-ring;
+  aspect-ratio: 1;
+  width: 100%;
+  color: $zinc-300;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+
+  // slot-bg gradient — lives on ::before so inline backgroundImage can't kill it
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: $slot-bg-gradient;
+    pointer-events: none;
+    z-index: 0;
+    transition: background 0.15s ease;
+  }
+
+  // slot-active hover
+  &:hover {
+    border-color: rgba(255,255,255,0.20);
+    box-shadow: $slot-hover-ring, 0 4px 12px rgba(0,0,0,0.20);
+
+    &::before { background: $slot-active-gradient; }
+
+    .inventory-slot-number {
+      color: $zinc-400;
+    }
+  }
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.equipment-slot {
+  @extend .inventory-slot;
+  aspect-ratio: auto !important;
+
+  /* 1. ON FORCE LE BLOC À REMPLIR LA CELLULE */
+  height: 100% !important;
+
+  /* 2. ON DÉSACTIVE LES LIMITES D'OX INVENTORY */
+  max-height: none !important;
+  min-height: 0 !important;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 12px;
+  gap: 12px;
+
+  .equipment-icon {
+    font-size: 20px;       // Icône légèrement plus petite
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .equipment-label {
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: $tracking-wide;
+    margin-top: 0;         // Annule la marge du carré
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ── Slot number — top-left badge, z-index above the item-slot-wrapper overlay ──
+// "absolute top-2 left-2 text-[10px] font-semibold text-zinc-500"
+.inventory-slot-number {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;   // above item-slot-wrapper (z-index 2) which creates a stacking context
+  font-size: 10px;
+  font-weight: 600;
+  color: $zinc-500;
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.15s ease;
+}
+
+// ── Item image — centered frame (replaces backgroundImage inline style) ────────
+// "flex items-center justify-center" — item image at 55% of slot size
+.slot-image-frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 16px;
+}
+
+.slot-image {
+  width: 100%;
+  height: 100%;
+  max-width: 60%;
+  max-height: 60%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  pointer-events: none;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+// ── Inner slot wrapper — full-size overlay for tooltip hover events ────────────
+.item-slot-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;   // creates a stacking context; slot-number uses z-index 10 to stay above
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p { font-size: 10px; }
+}
+
+// ── Count / weight badge — bottom-right absolute glass pill ───────────────────
+// Reference: "bg-zinc-900/80 backdrop-blur px-1.5 py-0.5 rounded text-[10px] font-medium text-zinc-400 border border-white/5"
+.item-slot-info-wrapper {
+  position: absolute;
+  z-index: 3;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  background-color: rgba($zinc-900, 0.80);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 4px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+
+  p {
+    font-size: 10px;
+    font-weight: 500;
+    color: $zinc-400;
+    white-space: nowrap;
+    line-height: 1.4;
+  }
+}
+
+// ── Item label — gradient overlay pinned to slot bottom ───────────────────────
+.inventory-slot-label-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.70) 0%, transparent 100%);
+  padding: 16px 6px 6px;
+}
+
+.inventory-slot-label-text {
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: $tracking-wide;
+  color: rgba(255,255,255,0.45);
+  padding: 0 4px;
+}
+
+// ── Durability bar — absolute, pinned to very bottom of slot ─────────────────
+// Reference: "absolute bottom-0 left-0 w-full h-1 bg-zinc-800"
+.durability-bar {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  background: rgba($zinc-800, 0.40);
+
+  .durability-fill {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+
+    &.high { background-color: $emerald-500; box-shadow: 0 0 10px rgba(16,185,129,0.4); }
+    &.medium { background-color: $yellow-500; }
+    &.low { background-color: $rose-500; }
+  }
+}
+
+// ── Shop price / currency ─────────────────────────────────────────────────────
+.item-slot-currency-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 2px 4px;
+  p { font-size: 11px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+}
+
+.item-slot-price-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 2px 4px;
+  p { font-size: 11px; font-weight: 500; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+}
+
+// ─── (Legacy) header wrappers — kept so hotbar doesn't break ──────────────────
+.item-slot-header-wrapper     { display: flex; flex-direction: row; justify-content: flex-end; }
+.item-hotslot-header-wrapper  { @extend .item-slot-header-wrapper; justify-content: space-between; }
+.hotbar-slot-header-wrapper   { display: flex; flex-direction: row; justify-content: space-between; }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// WEIGHT BAR — Vitals pill style (used in right panel header via WeightBar)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.weight-bar {
+  background: rgba($zinc-800, 0.50);
+  height: 6px;
+  border-radius: 9999px;
+  overflow: hidden;
+  border: none;
+  margin-top: 6px;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// EQUIPMENT SLOTS (NEW - from reference HTML)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.equipment-panel {
+  @include glass;
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.equipment-header {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  color: $zinc-500;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  height: 100%;
+  align-content: start;
+}
+
+.equipment-slot {
+  @extend .inventory-slot;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &.empty {
+    .equipment-icon {
+      color: $zinc-600;
+      transition: color 0.15s;
+    }
+
+    .equipment-label {
+      color: $zinc-600;
+      transition: color 0.15s;
+    }
+
+    &:hover {
+      border-color: rgba($zinc-700, 0.5);
+
+      .equipment-icon {
+        color: $zinc-400;
+      }
+
+      .equipment-label {
+        color: $zinc-500;
+      }
+    }
+  }
+
+  &.equipped {
+    border-color: rgba($zinc-700, 0.5);
+    background: rgba($zinc-800, 0.2);
+
+    .equipment-icon {
+      color: $zinc-200;
+    }
+
+    .equipment-label {
+      color: $zinc-400;
+    }
+  }
+}
+
+.equipment-icon {
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.equipment-label {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: $tracking-wide;
+  margin-top: 8px;
+}
+
+.equipment-status-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background-color: $emerald-500;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba($emerald-500, 0.5);
+}
+
+.equipment-durability {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba($emerald-500, 0.2);
+
+  .equipment-durability-fill {
+    height: 100%;
+    background-color: $emerald-500;
+    transition: width 0.3s ease;
+  }
+}
+
+.equipment-actions {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  gap: 8px;
+}
+
+.equipment-action-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: $zinc-800;
+  border: 1px solid rgba(255,255,255,0.05);
+  color: $zinc-300;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s, border-color 0.15s;
+
+  &:hover {
+    background-color: $zinc-700;
+    border-color: rgba(255,255,255,0.1);
+  }
+}

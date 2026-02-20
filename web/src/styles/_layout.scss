@@ -1,0 +1,460 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// RESET / BASE
+// ═══════════════════════════════════════════════════════════════════════════════
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  font-family: $font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: $zinc-700;
+  color: #fff;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: none !important;
+  overflow: hidden !important;
+  user-select: none;
+  color: $zinc-300;
+}
+
+#root { height: 100%; }
+
+p { margin: 0; padding: 0; }
+
+// Hide number-input spinners
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+// Thin scrollbar
+::-webkit-scrollbar       { width: 4px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  &:hover { background: rgba(255,255,255,0.2); }
+}
+
+.app-wrapper { width: 100%; color: $zinc-300; }
+
+button:active { transform: translateY(2px); }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// UTILITY CLASSES — Tailwind-inspired
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.glass-panel {
+  @include glass;
+}
+
+.slot-bg {
+  background: $slot-bg-gradient;
+  box-shadow: $slot-ring;
+}
+
+.slot-active {
+  &:hover {
+    background: $slot-active-gradient;
+    border-color: rgba(255,255,255,0.2);
+    box-shadow: $slot-hover-ring, 0 4px 12px rgba(0,0,0,0.2);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INVENTORY PANEL — Classe unifiée pour tous les panneaux d'inventaire
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-panel {
+  background: rgba(24, 24, 27, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 0.75rem;
+  padding: 0px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+// Classe utilitaire pour hauteur dynamique
+.h-fit {
+  height: max-content !important;
+  min-height: 0 !important;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// MAIN LAYOUT — 3-column grid (col-3 | col-5 | col-4 of 12-col system)
+// Reference: "grid grid-cols-12 gap-6"
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.inventory-wrapper {
+  display: grid;
+  grid-template-columns: 25fr 42fr 33fr;   // 3 : 5 : 4 proportions
+  gap: 24px;                               // reference: gap-6
+  width: 95vw;
+  max-width: 95%;
+  height: 90vh;
+  padding: 8px;
+  // Tooltip and context menu are absolute, not grid children
+  position: relative;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLAYER CARD — left column, reference "Profile Card" + "Vitals" sections
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.player-card {
+  @include glass;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px;
+  height: fit-content;
+  position: relative;
+  overflow: hidden;
+}
+
+// Top accent line — "from-zinc-500 to-zinc-800" gradient stripe
+.player-card-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, $zinc-500 0%, $zinc-800 100%);
+  border-radius: 1rem 1rem 0 0;
+}
+
+// ── Profile header ────────────────────────────────────────────────────────────
+.player-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 4px;   // clear the accent bar
+}
+
+.player-card-avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $zinc-800;
+  border: 1px solid $zinc-700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $zinc-400;
+  font-size: 24px;
+}
+
+.player-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;   // allow text truncation
+}
+
+.player-card-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-card-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: $zinc-500;
+  font-weight: 500;
+}
+
+.player-card-role {
+  background-color: rgba($zinc-800, 0.8);
+  color: $zinc-400;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.player-card-id {
+  color: $zinc-500;
+  font-size: 12px;
+}
+
+// ── Vitals 2×2 grid ───────────────────────────────────────────────────────────
+// Reference: "grid grid-cols-2 gap-3"
+.vitals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+// Individual vital card — "bg-zinc-900/40 rounded-xl p-3 border border-white/5"
+.vital-card {
+  background-color: rgba($zinc-900, 0.40);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vital-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vital-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: $zinc-500;
+  letter-spacing: 0;
+}
+
+.vital-icon {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Vital progress bar — "bg-zinc-800/50 rounded-full h-1.5 overflow-hidden"
+.vital-track {
+  width: 100%;
+  background: rgba($zinc-800, 0.50);
+  border-radius: 9999px;
+  height: 6px;     // h-1.5 = 6px
+  overflow: hidden;
+}
+
+.vital-fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+
+  &.health { background-color: $rose-500; }
+  &.armor { background-color: $blue-500; }
+  &.hunger { background-color: $amber-500; }
+  &.thirst { background-color: $cyan-500; }
+}
+
+// ── Carrying load ─────────────────────────────────────────────────────────────
+// Reference: mt-auto section at the bottom of Profile Card
+.weight-section {
+  margin-top: auto;   // push to bottom of card
+}
+
+.weight-section-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: $zinc-400;
+  margin-bottom: 8px;
+}
+
+// "bg-zinc-800/50 rounded-full h-2 overflow-hidden border border-white/5"
+.weight-section-track {
+  width: 100%;
+  background: rgba($zinc-800, 0.50);
+  border-radius: 9999px;
+  height: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.weight-section-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background-color: $zinc-400;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NOTIFICATION TOAST (NEW - from reference HTML bottom-right)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.notification-toast {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  @include glass;
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 2px solid $emerald-500;
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 0.3s ease;
+  box-shadow: $glass-shadow, 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 100;
+}
+
+.notification-icon {
+  background-color: rgba($emerald-500, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  color: $emerald-400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notification-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.notification-message {
+  font-size: 10px;
+  color: $zinc-400;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SECONDARY INVENTORY PANEL (RIGHT COLUMN)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.secondary-inventory-wrapper {
+  @include glass;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 100%;
+  position: relative;
+
+  // Top accent line (subtle centered gradient)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent 0%, rgba($zinc-700, 0.5) 50%, transparent 100%);
+    border-radius: 1rem 1rem 0 0;
+    opacity: 0.5;
+  }
+}
+
+.secondary-inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.secondary-inventory-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: $tracking-tight;
+  color: #fff;
+}
+
+.secondary-inventory-icon {
+  color: $zinc-400;
+  font-size: 18px;
+}
+
+.secondary-inventory-weight {
+  font-size: 12px;
+  color: $zinc-500;
+  background-color: rgba($zinc-900, 0.50);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.weight-current {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+.weight-separator {
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0 2px;
+}
+
+.weight-max {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weight-unit {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  margin-left: 1px;
+}
+
+.secondary-inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $gridGap;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+  align-content: start;
+}
+
+.secondary-inventory-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  text-align: center;
+}
+
+.secondary-inventory-label {
+  font-size: 10px;
+  color: $zinc-600;
+  text-transform: uppercase;
+  letter-spacing: $tracking-widest;
+  font-weight: 500;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TRANSITIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.transition-fade-enter          { opacity: 0; }
+.transition-fade-enter-active   { opacity: 1; transition: opacity 200ms ease; }
+.transition-fade-exit           { opacity: 1; }
+.transition-fade-exit-active    { opacity: 0; transition: opacity 200ms ease; }
+
+.transition-slide-up-enter        { transform: translateY(200px); }
+.transition-slide-up-enter-active { transform: translateY(0); transition: transform 200ms ease; }
+.transition-slide-up-exit         { transform: translateY(0); }
+.transition-slide-up-exit-active  { transform: translateY(200px); transition: transform 200ms ease; }

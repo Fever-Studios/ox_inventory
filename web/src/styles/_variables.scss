@@ -1,0 +1,66 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// AURA DESIGN SYSTEM — Full structural overhaul for ox_inventory
+// Reference: aura_ui.html — absolute fidelity target
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ─── Color tokens ─────────────────────────────────────────────────────────────
+$zinc-950: #09090b;
+$zinc-900: #18181b;
+$zinc-800: #27272a;
+$zinc-700: #3f3f46;
+$zinc-600: #52525b;
+$zinc-500: #71717a;
+$zinc-400: #a1a1aa;
+$zinc-300: #d4d4d8;
+$zinc-200: #e4e4e7;
+$zinc-100: #f4f4f5;
+
+$emerald-500: #10b981;
+$emerald-400: #34d399;
+$emerald-300: #6ee7b7;
+$rose-500:    #f43f5e;
+$rose-300:    #fda4af;
+$rose-900:    #881337;
+$cyan-500:    #06b6d4;
+$cyan-300:    #67e8f9;
+$amber-500:   #f59e0b;
+$amber-300:   #fcd34d;
+$amber-100:   #fef3c7;
+$blue-500:    #3b82f6;
+$indigo-300:  #a5b4fc;
+$orange-300:  #fdba74;
+$yellow-500:  #eab308;
+
+// ─── Aura glass — exact values from reference ─────────────────────────────────
+$glass-bg:     rgba(10, 10, 10, 0.4);  // Changed from 0.75 to 0.4 for more transparency
+$glass-border: rgba(255, 255, 255, 0.08);
+$glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+// ─── Glass mixin ──────────────────────────────────────────────────────────────
+@mixin glass {
+  background: $glass-bg;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid $glass-border;
+  box-shadow: $glass-shadow;
+  border-radius: 1rem;
+}
+
+
+// ─── Slot tokens — exact from .slot-bg / .slot-active in reference ────────────
+$slot-bg-gradient:     linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+$slot-active-gradient: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.04) 100%);
+$slot-ring:            inset 0 0 0 1px rgba(255,255,255,0.05);
+$slot-hover-ring:      inset 0 0 0 1px rgba(255,255,255,0.1);
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$tracking-tight: -0.025em;
+$tracking-wide:   0.06em;
+$tracking-widest: 0.1em;
+
+// ─── Grid ─────────────────────────────────────────────────────────────────────
+$gridCols: 5;
+$gridRows: 5;
+$gridSize: 10.2vh;
+$gridGap:  12px;

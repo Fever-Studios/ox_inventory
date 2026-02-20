@@ -1,0 +1,153 @@
+// ═══════════════════════════════════════════════════════════════════════════════
+// DRAG PREVIEW
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.item-drag-preview {
+  width: 7.7vh;
+  height: 7.7vh;
+  z-index: 100;
+  position: fixed;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 7vh;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// TOOLTIP — glass panel
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.tooltip-wrapper {
+  pointer-events: none;
+  @include glass;
+  width: 220px;
+  min-width: 220px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: $zinc-300;
+  p { font-size: 12px; font-weight: 400; line-height: 1.5; color: $zinc-400; }
+}
+
+.tooltip-header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  p { font-size: 14px; font-weight: 500; letter-spacing: $tracking-tight; color: #fff; }
+}
+
+.tooltip-description    { padding-top: 4px; }
+.tooltip-markdown > p   { margin: 0; font-size: 12px; color: $zinc-400; }
+
+.tooltip-crafting-duration {
+  display: flex; align-items: center; justify-content: center; gap: 4px; padding-top: 4px;
+  p { font-size: 12px; color: $zinc-400; }
+}
+
+.tooltip-ingredients  { padding-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+.tooltip-ingredient   { display: flex; align-items: center; gap: 6px;
+  img { width: 26px; height: 26px; border-radius: 6px; }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONTEXT MENU — glass panel
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.context-menu-list {
+  min-width: 180px;
+  @include glass;
+  color: $zinc-300;
+  padding: 4px;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.context-menu-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  color: $zinc-300;
+  font-size: 13px;
+  font-weight: 400;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.15s;
+
+  &:active { transform: none; }
+  &:hover  { background-color: rgba(255,255,255,0.07); }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// USEFUL-CONTROLS DIALOG + FLOATING TRIGGER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+.useful-controls-dialog {
+  @include glass;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $zinc-300;
+  width: 460px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 16px;
+  z-index: 50;
+}
+
+.useful-controls-dialog-overlay { background-color: rgba(0,0,0,0.55); }
+
+.useful-controls-dialog-title {
+  display: flex; width: 100%; justify-content: space-between; align-items: center;
+  font-size: 16px; font-weight: 500; letter-spacing: $tracking-tight; color: #fff;
+}
+
+.useful-controls-dialog-close {
+  width: 28px; height: 28px; padding: 6px; display: flex; justify-content: center;
+  align-items: center; border-radius: 8px; fill: $zinc-400; cursor: pointer;
+  transition: background-color 0.15s;
+  &:hover { background-color: rgba(255,255,255,0.07); }
+}
+
+.useful-controls-content-wrapper { display: flex; flex-direction: column; gap: 16px; }
+
+.divider { width: 100%; height: 1px; background-color: rgba(255,255,255,0.07); }
+
+// Floating "?" info trigger button
+.useful-controls-button {
+  position: fixed !important;
+  bottom: 24px;
+  right: 24px;
+  z-index: 20;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px !important;
+  background-color: rgba($zinc-800, 0.70) !important;
+  border: 1px solid $glass-border !important;
+  color: $zinc-400;
+  fill: $zinc-400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 150ms;
+  &:hover { background-color: rgba($zinc-700, 0.80) !important; border-color: rgba(255,255,255,0.15) !important; }
+}
+
+.useful-controls-exit-button {
+  position: absolute !important;
+  right: 8px; top: 8px;
+  border-radius: 8px !important;
+  color: $zinc-500 !important;
+}
