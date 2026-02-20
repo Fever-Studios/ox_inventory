@@ -3,6 +3,7 @@ import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
 import { getTotalWeight } from '../../helpers';
 import useNuiEvent from '../../hooks/useNuiEvent';
+import { theme, t } from '../../config/theme';
 
 // ─── Minimal inline SVG icons ────────────────────────────────────────────────
 
@@ -58,10 +59,10 @@ interface VitalConfig {
 }
 
 const VITALS: VitalConfig[] = [
-  { label: 'Health', key: 'health', Icon: HeartIcon,  color: '#f43f5e' },   // rose-500
-  { label: 'Armor',  key: 'armor',  Icon: ShieldIcon,  color: '#3b82f6' },   // blue-500
-  { label: 'Hunger', key: 'hunger', Icon: FoodIcon,    color: '#f59e0b' },   // amber-500
-  { label: 'Thirst', key: 'thirst', Icon: DropletIcon, color: '#06b6d4' },   // cyan-500
+  { label: 'Health', key: 'health', Icon: HeartIcon,   color: theme.colors.health },
+  { label: 'Armor',  key: 'armor',  Icon: ShieldIcon,  color: theme.colors.armor  },
+  { label: 'Hunger', key: 'hunger', Icon: FoodIcon,    color: theme.colors.hunger },
+  { label: 'Thirst', key: 'thirst', Icon: DropletIcon, color: theme.colors.thirst },
 ];
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -79,7 +80,10 @@ const PlayerCard: React.FC = () => {
   );
 
   const weightPct = inventory.maxWeight ? Math.min((weight / inventory.maxWeight) * 100, 100) : 0;
-  const weightFillColor = weightPct > 90 ? '#f43f5e' : weightPct > 70 ? '#f59e0b' : '#a1a1aa';
+  const weightFillColor =
+    weightPct > 90 ? theme.colors.weightDanger  :
+    weightPct > 70 ? theme.colors.weightWarning :
+    theme.colors.weightNormal;
 
   // Use inventory label as player name (Ox sets this to the player's name)
   const playerName = inventory.label || 'Player';
@@ -104,28 +108,30 @@ const PlayerCard: React.FC = () => {
       </div>
 
       {/* ── Vitals 2×2 grid ────────────────────────────── */}
-      <div className="vitals-grid">
-        {VITALS.map(({ label, key, Icon, color }) => (
-          <div className="vital-card" key={key}>
-            <div className="vital-card-header">
-              <span className="vital-label">{label}</span>
-              <Icon className="vital-icon" style={{ color }} />
+      {theme.ui.showVitals && (
+        <div className="vitals-grid">
+          {VITALS.map(({ label, key, Icon, color }) => (
+            <div className="vital-card" key={key}>
+              <div className="vital-card-header">
+                <span className="vital-label">{label}</span>
+                <Icon className="vital-icon" style={{ color }} />
+              </div>
+              <div className="vital-track">
+                <div
+                  className="vital-fill"
+                  style={{ width: `${vitals[key]}%`, backgroundColor: color }}
+                />
+              </div>
             </div>
-            <div className="vital-track">
-              <div
-                className="vital-fill"
-                style={{ width: `${vitals[key]}%`, backgroundColor: color }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* ── Carrying load ───────────────────────────────── */}
-      {inventory.maxWeight !== undefined && inventory.maxWeight > 0 && (
+      {theme.ui.showWeightBar && inventory.maxWeight !== undefined && inventory.maxWeight > 0 && (
         <div className="weight-section">
           <div className="weight-section-label">
-            <span>Carrying Load</span>
+            <span>{t('carrying')}</span>
             <span>{(weight / 1000).toLocaleString('en-us', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} / {inventory.maxWeight / 1000}kg</span>
           </div>
           <div className="weight-section-track">

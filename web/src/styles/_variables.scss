@@ -37,13 +37,16 @@ $glass-border: rgba(255, 255, 255, 0.08);
 $glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 
 // ─── Glass mixin ──────────────────────────────────────────────────────────────
+// Les var() permettent à applyTheme.ts de surcharger les valeurs au runtime.
+// Les #{$...} sont les fallbacks SCSS : si applyTheme() n'est pas appelé,
+// le rendu est identique à l'original.
 @mixin glass {
-  background: $glass-bg;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid $glass-border;
+  background: var(--glass-bg, #{$glass-bg});
+  backdrop-filter: blur(var(--glass-blur, 24px));
+  -webkit-backdrop-filter: blur(var(--glass-blur, 24px));
+  border: 1px solid var(--glass-border, #{$glass-border});
   box-shadow: $glass-shadow;
-  border-radius: 1rem;
+  border-radius: var(--radius-panel, 1rem);
 }
 
 
