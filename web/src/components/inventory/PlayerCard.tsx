@@ -94,18 +94,20 @@ const PlayerCard: React.FC = () => {
       <div className="player-card-accent" />
 
       {/* ── Profile header ─────────────────────────────── */}
-      <div className="player-card-header">
-        <div className="player-card-avatar">
-          <UserIcon />
-        </div>
-        <div className="player-card-info">
-          <h2 className="player-card-name">{playerName}</h2>
-          <div className="player-card-badges">
-            <span className="player-card-role">CITIZEN</span>
-            <span className="player-card-id">ID: {inventory.id || '—'}</span>
+      {theme.ui.showPlayerCardTitle && (
+        <div className="player-card-header">
+          <div className="player-card-avatar">
+            <UserIcon />
+          </div>
+          <div className="player-card-info">
+            <h2 className="player-card-name">{playerName}</h2>
+            <div className="player-card-badges">
+              <span className="player-card-role">CITIZEN</span>
+              <span className="player-card-id">ID: {inventory.id || '—'}</span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── Vitals 2×2 grid ────────────────────────────── */}
       {theme.ui.showVitals && (
