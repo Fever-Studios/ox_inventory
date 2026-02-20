@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import useNuiEvent from '../../hooks/useNuiEvent';
 import InventoryHotbar from './InventoryHotbar';
-import { useAppDispatch } from '../../store';
-import { refreshSlots, setAdditionalMetadata, setupInventory } from '../../store/inventory';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { refreshSlots, selectRightInventory, setAdditionalMetadata, setupInventory } from '../../store/inventory';
+import { theme } from '../../config/theme';
 import { useExitListener } from '../../hooks/useExitListener';
 import type { Inventory as InventoryProps } from '../../typings';
 import RightInventory from './RightInventory';
@@ -25,6 +26,8 @@ const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
   const dispatch = useAppDispatch();
+  const rightInventory = useAppSelector(selectRightInventory);
+  const showRightPanel = theme.ui.showRightPanelWhenEmpty || rightInventory.type !== '';
 
   useNuiEvent<boolean>('setInventoryVisible', setInventoryVisible);
   useNuiEvent<false>('closeInventory', () => {
@@ -56,7 +59,7 @@ const Inventory: React.FC = () => {
           className="inventory-wrapper"
           style={{
             display: 'grid',
-            gridTemplateColumns: '25% 42% 33%',
+            gridTemplateColumns: showRightPanel ? '25% 42% 33%' : '25% 75%',
             gap: '1.5rem',
             padding: '2rem',
             maxWidth: '1600px',
@@ -71,18 +74,19 @@ const Inventory: React.FC = () => {
               <PlayerCard />
             </div>
 
-            {/* Nouveau wrapper (Même style que tes autres colonnes) */}
-            <div
-              className="inventory-panel"
-              style={{
-                flex: 1, // Dit à la div de prendre tout l'espace restant sous la PlayerCard
-                display: 'flex',
-                flexDirection: 'column',
-                overflow: 'hidden'
-              }}
-            >
-              <EquipmentPanel />
-            </div>
+            {theme.ui.showEquipmentPanel && (
+              <div
+                className="inventory-panel"
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  overflow: 'hidden',
+                }}
+              >
+                <EquipmentPanel />
+              </div>
+            )}
           </div>
 
           {/* Center column: player pockets with action bar at the bottom */}
@@ -98,15 +102,17 @@ const Inventory: React.FC = () => {
           </div>
 
           {/* Right column: secondary inventory (ground / chest / trunk) */}
-          <div
-            className="inventory-panel"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <RightInventory />
-          </div>
+          {showRightPanel && (
+            <div
+              className="inventory-panel"
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <RightInventory />
+            </div>
+          )}
 
           <Tooltip />
           <InventoryContext />

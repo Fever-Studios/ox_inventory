@@ -1,4 +1,5 @@
 import React from 'react';
+import { theme } from '../../config/theme';
 
 // ─── Bibliothèque d'icônes SVG (Minimalistes) ─────────────────────────────────
 const Icons = {
@@ -117,7 +118,9 @@ const EquipmentPanel: React.FC = () => {
         {EQUIPMENT_LIST.map((item) => (
           <div key={item.id} className="equipment-slot empty">
             <div className="equipment-icon">{item.icon}</div>
-            <div className="equipment-label">{item.label}</div>
+            {theme.ui.showEquipmentLabels && (
+              <div className="equipment-label">{item.label}</div>
+            )}
           </div>
         ))}
       </div>
