@@ -186,7 +186,12 @@ local function loadInventoryData(data, player, ignoreSecurityChecks)
 
 			if stash.owner then
 				if stash.owner == true then
-					owner = data.owner or player?.owner
+					-- If security checks are enabled, force the owner to be the player's identifier
+					-- to prevent IDOR (accessing other players' personal stashes).
+					owner = player and player.owner
+					if ignoreSecurityChecks and data.owner then
+						owner = data.owner
+					end
 				else
 					owner = stash.owner
 				end
